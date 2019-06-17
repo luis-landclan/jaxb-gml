@@ -1,8 +1,5 @@
 package com.demo;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import net.opengis.gml.v_2_1_2.ObjectFactory;
-import net.opengis.gml.v_2_1_2.TestType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +7,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+
+import net.opengis.gml.v_2_1_2.TestType;
 
 public class XjcTest {
 
@@ -22,6 +21,7 @@ public class XjcTest {
 //        https://javaee.github.io/jaxb-v2/doc/user-guide/ch03.html
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testClasses() throws Exception{
         JAXBContext jc = JAXBContext.newInstance( "net.opengis.gml.v_2_1_2" );
