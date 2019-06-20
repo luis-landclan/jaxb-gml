@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>highways-network</artifactId>
+
+
+    <parent>
+        <artifactId>gml-schemas</artifactId>
+        <groupId>com.demo</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hisrc.w3c</groupId>
+            <artifactId>xlink-v_1_0</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hisrc.w3c</groupId>
+            <artifactId>w3c-schemas</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>${maven-jaxb2-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>RoutingAndAssetManagement</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaIncludes>
+                                <include>RoutingAndAssetManagement.xsd</include>
+                            </schemaIncludes>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <configuration>
+
+                    <useDependenciesAsEpisodes>true</useDependenciesAsEpisodes>
+                    <strict>false</strict>
+                    <extension>true</extension>
+                    <schemaIncludes/>
+
+                    <bindings/>
+
+                    <args>
+                        <arg>-XfixJAXB1058</arg>
+                        <arg>-XtoString</arg>
+                        <arg>-Xequals</arg>
+                        <arg>-XhashCode</arg>
+                        <arg>-Xcopyable</arg>
+                        <arg>-Xmergeable</arg>
+                        <arg>-Xsetters</arg>
+                        <arg>-Xwildcard</arg>
+                        <arg>-Xinject-code</arg>
+                        <arg>-Xinheritance</arg>
+                        <arg>-Xfluent-api</arg>
+<!--                        <arg>-Xjsonix</arg>-->
+<!--                        <arg>-Xjsonix-compact</arg>-->
+<!--                        <arg>-Xjsonix-generateJsonSchema</arg>-->
+                        <arg>-Xannotate</arg>
+                        <!--arg>-Xvisitor</arg-->
+                    </args>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics</artifactId>
+                            <version>${jaxb2-basics.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics-annotate</artifactId>
+                            <version>1.0.2</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-fluent-api</artifactId>
+                            <version>3.0</version>
+                        </plugin>
+                        <!--plugin>
+                            <groupId>com.massfords</groupId>
+                            <artifactId>jaxb-visitor</artifactId>
+                        </plugin-->
+                    </plugins>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+            </plugin>
+        </plugins>
+
+
+    </build>
+
+</project>

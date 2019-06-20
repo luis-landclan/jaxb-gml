@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/2.0" 
+  xmlns:gml="http://www.opengis.net/gml/3.2" 
+  xmlns:gmlexr="http://www.opengis.net/gml/3.3/exr" 
+  xmlns:gmlxbt="http://www.opengis.net/gml/3.3/xbt" 
+  xmlns:highway="http://namespaces.os.uk/mastermap/highwayNetwork/2.0" 
+  xmlns:net="http://inspire.ec.europa.eu/schemas/net/4.0"
+  xmlns:tn="http://inspire.ec.europa.eu/schemas/tn/4.0" 
+  xmlns:tn-ro="http://inspire.ec.europa.eu/schemas/tn-ro/4.0" 
+  xmlns:am="http://inspire.ec.europa.eu/schemas/am/4.0" 
+  xmlns:su-core="http://inspire.ec.europa.eu/schemas/su-core/4.0" 
+  xmlns:os="http://namespaces.os.uk/product/1.0"
+  elementFormDefault="qualified" targetNamespace="http://namespaces.os.uk/mastermap/highwayNetwork/2.0" version="2.0.1">
+  <import namespace="http://inspire.ec.europa.eu/schemas/base2/2.0" schemaLocation="http://inspire.ec.europa.eu/schemas/base2/2.0/BaseTypes2.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/am/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/am/4.0/AreaManagementRestrictionRegulationZone.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/su-core/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/su-core/4.0/StatisticalUnitCore.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.3/exr" schemaLocation="http://schemas.opengis.net/gml/3.3/extdEncRule.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.3/xbt" schemaLocation="http://schemas.opengis.net/gml/3.3/extdBaseTypes.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/tn/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn/4.0/CommonTransportElements.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/net/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/net/4.0/Network.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/tn-ro/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn-ro/4.0/RoadTransportNetwork.xsd"/>
+  <import namespace="http://namespaces.os.uk/product/1.0" schemaLocation="https://www.ordnancesurvey.co.uk/xml/schema/product/1.0/OSProduct.xsd"/>
+  <import namespace="http://namespaces.os.uk/mastermap/highwayNetwork/2.0" schemaLocation="LinearHighwayNetwork.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="NumberOfLanesType" substitutionGroup="gml:AbstractObject" type="highway:NumberOfLanesTypeType"/>
+  <complexType name="NumberOfLanesTypeType">
+    <sequence>
+      <element name="numberOfLanes" type="integer">
+        <annotation>
+          <documentation>The number of lanes represented.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="direction" nillable="true" type="gml:ReferenceType">
+        <annotation>
+          <documentation>Indicates which direction the number of lanes is valid for.</documentation>
+          <appinfo>
+            <targetCodeList xmlns="http://www.opengis.net/gml/3.3/exr">LinkDirectionValue</targetCodeList>
+          </appinfo>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="minMaxNumberOfLanes" nillable="true">
+        <annotation>
+          <documentation>Indicates if the number of lanes is counted as minimum or maximum value.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="tn-ro:MinMaxLaneValueType">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="NumberOfLanesTypePropertyType">
+    <sequence>
+      <element ref="highway:NumberOfLanesType"/>
+    </sequence>
+  </complexType>
+  <element name="ElevationGainType" substitutionGroup="gml:AbstractObject" type="highway:ElevationGainTypeType"/>
+  <complexType name="ElevationGainTypeType">
+    <sequence>
+      <element name="inDirection" type="gml:MeasureType">
+        <annotation>
+          <documentation>Total increase in height experienced when passing along the link from the start to the end.</documentation>
+        </annotation>
+      </element>
+      <element name="inOppositeDirection" type="gml:MeasureType">
+        <annotation>
+          <documentation>Total increase in height experienced when passing along the link from the end to the start.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ElevationGainTypePropertyType">
+    <sequence>
+      <element ref="highway:ElevationGainType"/>
+    </sequence>
+  </complexType>
+  <element name="CycleFacilityType" substitutionGroup="gml:AbstractObject" type="highway:CycleFacilityTypeType"/>
+  <complexType name="CycleFacilityTypeType">
+    <sequence>
+      <element name="cycleFacility" type="gml:CodeType">
+        <annotation>
+          <documentation>The cycle amenity available along the link.</documentation>
+        </annotation>
+      </element>
+      <element name="wholeLink" nillable="true">
+        <annotation>
+          <documentation>Identifies if the facility applied to entirety of the link.</documentation>
+        </annotation>
+        <complexType>
+          <simpleContent>
+            <extension base="boolean">
+              <attribute name="nilReason" type="gml:NilReasonType"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CycleFacilityTypePropertyType">
+    <sequence>
+      <element ref="highway:CycleFacilityType"/>
+    </sequence>
+  </complexType>
+  <element name="Road" substitutionGroup="tn-ro:Road" type="highway:RoadType">
+    <annotation>
+      <documentation>A compound feature that represents a road with a name or number. This may be a classified road, such as the A38, or a named road such as Romsey Road. This references a collection of RoadLinks.</documentation>
+    </annotation>
+  </element>
+  <complexType name="RoadType">
+    <complexContent>
+      <extension base="tn-ro:RoadType">
+        <sequence>
+          <element minOccurs="0" name="roadClassification" type="gml:CodeType">
+            <annotation>
+              <documentation>The national classification of the road.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="designatedName" type="highway:DesignatedNameTypePropertyType">
+            <annotation>
+              <documentation>Official name assigned to the highway by a designated Street Naming Authority.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="localName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Another name in local use associated to the highway.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="descriptor" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Street description allocated by a Street Naming Authority or Highway Authority used to identify a street that does not have a designated name.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="RoadPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:Road"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ConnectingNode" substitutionGroup="net:NetworkElement" type="highway:ConnectingNodeType"/>
+  <complexType name="ConnectingNodeType">
+    <complexContent>
+      <extension base="net:NetworkElementType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element name="geometry" type="gml:PointPropertyType"/>
+          <element name="roadLink" nillable="true" type="highway:RoadLinkPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ConnectingNodePropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:ConnectingNode"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="Path" substitutionGroup="tn-ro:Road" type="highway:PathType"/>
+  <complexType name="PathType">
+    <complexContent>
+      <extension base="tn-ro:RoadType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" name="pathName" type="gmlxbt:LanguageStringType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="PathPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:Path"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="DesignatedNameType" substitutionGroup="gml:AbstractObject" type="highway:DesignatedNameTypeType"/>
+  <complexType name="DesignatedNameTypeType">
+    <sequence>
+      <element name="name" type="gmlxbt:LanguageStringType">
+        <annotation>
+          <documentation>Official name assigned to the highway by a designated Street Naming Authority.</documentation>
+        </annotation>
+      </element>
+      <element name="namingAuthority" type="highway:ResponsibleAuthorityPropertyType">
+        <annotation>
+          <documentation>The Street Naming Authority for the designatedName.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="DesignatedNameTypePropertyType">
+    <sequence>
+      <element ref="highway:DesignatedNameType"/>
+    </sequence>
+  </complexType>
+  <element name="RoadWidthType" substitutionGroup="gml:AbstractObject" type="highway:RoadWidthTypeType"/>
+  <complexType name="RoadWidthTypeType">
+    <sequence>
+      <element name="averageWidth" type="gml:MeasureType">
+        <annotation>
+          <documentation>The average width of the road carriageway.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="minimumWidth" type="gml:MeasureType">
+        <annotation>
+          <documentation>The minimum width of the topographic area feature the RoadLink is representing.</documentation>
+        </annotation>
+      </element>
+      <element name="confidenceLevel" type="gml:CodeType">
+        <annotation>
+          <documentation>An indication of confidence in the width values provided</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="RoadWidthTypePropertyType">
+    <sequence>
+      <element ref="highway:RoadWidthType"/>
+    </sequence>
+  </complexType>
+  <element name="ConnectingLink" substitutionGroup="net:NetworkElement" type="highway:ConnectingLinkType"/>
+  <complexType name="ConnectingLinkType">
+    <complexContent>
+      <extension base="net:NetworkElementType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element name="geometry" type="gml:CurvePropertyType"/>
+          <element name="fictitious" type="boolean"/>
+          <element name="pathNode" type="highway:PathNodePropertyType"/>
+          <element name="connectingNode" type="highway:ConnectingNodePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ConnectingLinkPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:ConnectingLink"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="PathNode" substitutionGroup="tn-ro:RoadNode" type="highway:PathNodeType"/>
+  <complexType name="PathNodeType">
+    <complexContent>
+      <extension base="tn-ro:RoadNodeType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="classification" type="gml:CodeType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="PathNodePropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:PathNode"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="PathLink" substitutionGroup="tn-ro:RoadLink" type="highway:PathLinkType"/>
+  <complexType name="PathLinkType">
+    <complexContent>
+      <extension base="tn-ro:RoadLinkType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element name="formOfWay" type="gml:CodeType"/>
+          <element maxOccurs="2" minOccurs="0" name="pathName" type="gmlxbt:LanguageStringType"/>
+          <element maxOccurs="2" minOccurs="0" name="alternateName" type="gmlxbt:LanguageStringType"/>
+          <element name="provenance" type="gml:CodeType"/>
+          <element minOccurs="0" name="surfaceType" type="gml:CodeType"/>
+          <element minOccurs="0" name="cycleFacility" type="highway:CycleFacilityTypePropertyType"/>
+          <element name="matchStatus" type="gml:CodeType"/>
+          <element name="length" type="gml:MeasureType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="alternateIdentifier" type="base2:ThematicIdentifierPropertyType"/>
+          <element name="startGradeSeparation" type="integer"/>
+          <element name="endGradeSeparation" type="integer"/>
+          <element minOccurs="0" name="elevationGain" type="highway:ElevationGainTypePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="relatedArea" type="tn-ro:RoadAreaPropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="formsPartOf" type="tn:TransportLinkSetPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="PathLinkPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:PathLink"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="Street" substitutionGroup="highway:Road" type="highway:StreetType">
+    <annotation>
+      <documentation>Any road, footway, footpath, cycletrack, track or passageway that forms a highway.
+
+A highway represents individual subsections of Road which are managed (naming/numbering) by a specified responsible authority.</documentation>
+    </annotation>
+  </element>
+  <complexType name="StreetType">
+    <complexContent>
+      <extension base="highway:RoadType">
+        <sequence>
+          <element name="streetType" type="gml:CodeType">
+            <annotation>
+              <documentation>Classification of the type of Street from the National Street Gazetteer.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="operationalState" type="highway:OperationalStateTypePropertyType">
+            <annotation>
+              <documentation>Indicator identifying the physical nature of the road e.g. Under Construction.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="locality" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The Populated Place representing the locality that the Street is located within.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="town" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The settlement that the Street falls within.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" name="administrativeArea" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The administrative area that the Street is located within.</documentation>
+            </annotation>
+          </element>
+          <element name="responsibleAuthority" type="highway:ResponsibleAuthorityPropertyType">
+            <annotation>
+              <documentation>Reference to the authority that has current responsibility for naming and numbering.</documentation>
+            </annotation>
+          </element>
+          <element name="geometryProvenance" type="gml:CodeType">
+            <annotation>
+              <documentation>Identify where the geometry of the feature originated.</documentation>
+            </annotation>
+          </element>
+          <element name="geometry" type="gml:MultiCurvePropertyType">
+            <annotation>
+              <documentation>The aggregated geometry of all the RoadLinks or Elementary Street Units (when unmatched) which make up the feature.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="gssCode" type="su-core:StatisticalUnitPropertyType">
+            <annotation>
+              <documentation>A reference to the unique identifier of administrative areas managed by the Office for National Statistics. Role is used to describe the authority - 'Upper Tier Local Authority', 'Lower Tier Local Authority' and 'Unitary Local Authority'</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StreetPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:Street"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="RoadJunction" substitutionGroup="net:NetworkElement" type="highway:RoadJunctionType">
+    <annotation>
+      <documentation>A compound feature that represents a road junction with a name or number.</documentation>
+    </annotation>
+  </element>
+  <complexType name="RoadJunctionType">
+    <complexContent>
+      <extension base="net:NetworkElementType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element name="junctionType" type="gml:CodeType">
+            <annotation>
+              <documentation>A classification for the Road Junction.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" name="junctionName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The name of the junction. For numbered junctions this will provide a description of the junction, for example, M6 Junction 6.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="roadClassificationNumber" type="string">
+            <annotation>
+              <documentation>The official road number assigned by the appropriate authority. For example, M6.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="junctionNumber" type="string">
+            <annotation>
+              <documentation>The number of the junction. For example, 6.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="node">
+            <annotation>
+              <documentation>The reference to the RoadNode features which builds up the RoadJunction feature.</documentation>
+            </annotation>
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractFeatureMemberType">
+                  <sequence minOccurs="0">
+                    <element ref="net:Node"/>
+                  </sequence>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="RoadJunctionPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:RoadJunction"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="RoadLink" substitutionGroup="tn-ro:RoadLink" type="highway:RoadLinkType">
+    <annotation>
+      <documentation>A feature that represents a part or all of a highway.</documentation>
+    </annotation>
+  </element>
+  <complexType name="RoadLinkType">
+    <complexContent>
+      <extension base="tn-ro:RoadLinkType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element name="roadClassification" type="gml:CodeType">
+            <annotation>
+              <documentation>A classification of the designated importance of a road that provides an indication of its expected usage and importance.</documentation>
+            </annotation>
+          </element>
+          <element name="routeHierarchy" type="gml:CodeType">
+            <annotation>
+              <documentation>&lt;font color="#0f0f0f"&gt;A classification of the road designed to give the most appropriate route&lt;/font&gt;</documentation>
+            </annotation>
+          </element>
+          <element name="formOfWay" type="gml:CodeType">
+            <annotation>
+              <documentation>A description of the RoadLink based on its nature or use.</documentation>
+            </annotation>
+          </element>
+          <element name="trunkRoad" type="boolean">
+            <annotation>
+              <documentation>States if the RoadLink forms part of the Trunk Road network</documentation>
+            </annotation>
+          </element>
+          <element name="primaryRoute" type="boolean">
+            <annotation>
+              <documentation>States if the RoadLink forms part of the Primary Route network</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="roadClassificationNumber" type="string">
+            <annotation>
+              <documentation>The official road number assigned by the appropriate authority. Note that this includes at least one letter. For example ‘A329(M)</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="roadName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The name of the road the feature is part of, when a RoadLink is referenced by a Street with a streetStateType of Designated Street Name this is the name used else the name is from Road</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="alternateName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Another name for the road the feature is part of, this is populated with the name captured by Ordnance Survey when it differs from that in Street</documentation>
+            </annotation>
+          </element>
+          <element default="Open" name="operationalState" type="gml:CodeType">
+            <annotation>
+              <documentation>Indicator identifying the construction status of the road</documentation>
+            </annotation>
+          </element>
+          <element name="provenance" type="gml:CodeType">
+            <annotation>
+              <documentation>Information describing the organisation responsible for capturing the RoadLink.
+
+NOTE: This has been added for the early years of the product to allow users to determine whether the data has been captured by a local highway authority but may not meet spec quality requirements.</documentation>
+            </annotation>
+          </element>
+          <element name="directionality" type="gml:ReferenceType">
+            <annotation>
+              <documentation>Indication of the direction of traffic flow.</documentation>
+              <appinfo>
+                <targetCodeList xmlns="http://www.opengis.net/gml/3.3/exr">LinkDirectionValue</targetCodeList>
+              </appinfo>
+            </annotation>
+          </element>
+          <element name="length" type="gml:MeasureType">
+            <annotation>
+              <documentation>The calculated length of the RoadLink in metres.</documentation>
+            </annotation>
+          </element>
+          <element name="matchStatus" type="gml:CodeType">
+            <annotation>
+              <documentation>Indication whether the feature has been matched to a feature in the NSG</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="alternateIdentifier" type="base2:ThematicIdentifierPropertyType">
+            <annotation>
+              <documentation>Identifier(s) of the Elementary Street Unit from NSG or TRSG</documentation>
+            </annotation>
+          </element>
+          <element name="startGradeSeparation" type="integer">
+            <annotation>
+              <documentation>The relative level of the link at the startNode.</documentation>
+            </annotation>
+          </element>
+          <element name="endGradeSeparation" type="integer">
+            <annotation>
+              <documentation>The relative level of the link at the endNode.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="roadStructure" type="gml:CodeType">
+            <annotation>
+              <documentation>Identifies if this section of road passes through or over a physical structure.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="cycleFacility" type="highway:CycleFacilityTypePropertyType">
+            <annotation>
+              <documentation>Identifies if the RoadLink has facilities for a cyclist.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="roadWidth" type="highway:RoadWidthTypePropertyType">
+            <annotation>
+              <documentation>A measurement of the width of the topographic area which represents the Road Carriageway</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="4" minOccurs="0" name="numberOfLanes" type="highway:NumberOfLanesTypePropertyType">
+            <annotation>
+              <documentation>The number of lanes along a RoadLink.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="elevationGain" type="highway:ElevationGainTypePropertyType">
+            <annotation>
+              <documentation>The elevation gain is calculated from three dimensional geometry to define the total ascent experienced when passing along a RoadLink feature.
+The value is expressed both with and against the direction of digitising.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="relatedRoadArea" type="tn-ro:RoadAreaPropertyType">
+            <annotation>
+              <documentation>Reference to the topographic representation(s) of the same part of the road.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="formsPartOf" type="tn:TransportLinkSetPropertyType">
+            <annotation>
+              <documentation>Identifier of the Road or Street to which the RoadLink forms part of.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="RoadLinkPropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:RoadLink"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="RoadNode" substitutionGroup="tn-ro:RoadNode" type="highway:RoadNodeType">
+    <annotation>
+      <documentation>A point representing either the start/end of a road, the connectivity between two or more roads or where one of the recorded attributes changes along a road.</documentation>
+    </annotation>
+  </element>
+  <complexType name="RoadNodeType">
+    <complexContent>
+      <extension base="tn-ro:RoadNodeType">
+        <sequence>
+          <element minOccurs="0" name="classification" type="gml:CodeType">
+            <annotation>
+              <documentation>Further specialisation of the form of road node</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="access" type="gml:CodeType">
+            <annotation>
+              <documentation>Point where vehicles can either exit or enter a controlled-access highway.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="junctionNumber" type="string">
+            <annotation>
+              <documentation>The number of any junction that the node represents part of, for example M3 J12.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" minOccurs="0" name="junctionName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The name of any junction that the node represents part of.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="relatedRoadArea" type="tn-ro:RoadAreaPropertyType">
+            <annotation>
+              <documentation>Reference to the topographic representation(s) of the same part of the road.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="RoadNodePropertyType">
+    <sequence minOccurs="0">
+      <element ref="highway:RoadNode"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="ResponsibleAuthority" substitutionGroup="gml:AbstractObject" type="highway:ResponsibleAuthorityType"/>
+  <complexType name="ResponsibleAuthorityType">
+    <sequence>
+      <element name="identifier" type="string"/>
+      <element name="authorityName" type="string"/>
+    </sequence>
+  </complexType>
+  <complexType name="ResponsibleAuthorityPropertyType">
+    <sequence>
+      <element ref="highway:ResponsibleAuthority"/>
+    </sequence>
+  </complexType>
+  <element name="OperationalStateType" substitutionGroup="gml:AbstractObject" type="highway:OperationalStateTypeType"/>
+  <complexType name="OperationalStateTypeType">
+    <sequence>
+      <element name="state" type="gml:CodeType">
+        <annotation>
+          <documentation>Indicator identifying the physical nature of the road e.g. Under Construction</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="validTime" type="gml:TimePeriodPropertyType">
+        <annotation>
+          <documentation>If known, the real-world start and end date/times when the state applies.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="reason" type="string">
+        <annotation>
+          <documentation>Short description of the reason for closure.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="OperationalStateTypePropertyType">
+    <sequence>
+      <element ref="highway:OperationalStateType"/>
+    </sequence>
+  </complexType>
+</schema>

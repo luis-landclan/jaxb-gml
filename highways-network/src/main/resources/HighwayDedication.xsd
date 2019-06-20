@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:dedication="http://namespaces.os.uk/mastermap/highwayDedication/1.0" 
+  xmlns:gml="http://www.opengis.net/gml/3.2" 
+  xmlns:ram="http://namespaces.os.uk/mastermap/routingAndAssetManagement/2.1" 
+  xmlns:tn="http://inspire.ec.europa.eu/schemas/tn/4.0" 
+  xmlns:os="http://namespaces.os.uk/product/1.0"
+  xmlns:net="http://inspire.ec.europa.eu/schemas/net/4.0"
+  xmlns:highway="http://namespaces.os.uk/mastermap/highwayNetwork/2.0"
+  elementFormDefault="qualified" targetNamespace="http://namespaces.os.uk/mastermap/highwayDedication/1.0" version="1.0">
+  <import namespace="http://namespaces.os.uk/mastermap/routingAndAssetManagement/2.1" schemaLocation="https://www.ordnancesurvey.co.uk/xml/schema/highwaysnetwork/2.1/RoutingAndAssetManagement.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/tn/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn/4.0/CommonTransportElements.xsd"/>
+  <import namespace="http://namespaces.os.uk/product/1.0" schemaLocation="https://www.ordnancesurvey.co.uk/xml/schema/product/1.0/OSProduct.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/net/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/net/4.0/Network.xsd"/>
+  <import namespace="http://namespaces.os.uk/mastermap/highwayNetwork/2.0" schemaLocation="highwaysnetwork/2.0/LinearHighwayNetwork.xsd"/>
+  <import namespace="http://namespaces.os.uk/mastermap/highwayDedication/1.0" schemaLocation="HighwayDedication.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="HighwayDedication" substitutionGroup="tn:TransportProperty" type="dedication:HighwayDedicationType"/>
+  <complexType name="HighwayDedicationType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType"/>
+          <element name="dedication" type="gml:CodeType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="timeInterval" type="ram:TemporalPropertyTypePropertyType"/>
+          <element name="publicRightOfWay" type="boolean"/>
+          <element name="nationalCycleRoute" type="boolean"/>
+          <element minOccurs="0" name="quietRoute" type="boolean"/>
+          <element name="obstruction" type="boolean"/>
+          <element minOccurs="0" name="planningOrder" type="boolean"/>
+          <element minOccurs="0" name="worksProhibited" type="boolean"/>
+          <element name="geometry" type="gml:CurvePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="HighwayDedicationPropertyType">
+    <sequence minOccurs="0">
+      <element ref="dedication:HighwayDedication"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+</schema>

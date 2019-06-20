@@ -1,14 +1,48 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-<modelVersion>4.0.0</modelVersion>
-<groupId>com.demo</groupId>
-<artifactId>gml-schemas</artifactId>
-<packaging>pom</packaging>
-<version>1.0-SNAPSHOT</version>
-  <modules>
-    <module>2.1.2</module>
-      <module>3.2.1</module>
-  </modules>
-  <name>gml-schemas</name>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.demo</groupId>
+    <artifactId>gml-schemas</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>2.1.2</module>
+        <module>3.2.1</module>
+        <module>highways-network</module>
+        <module>address-base-premium</module>
+        <module>os-mastermap-v9-schema</module>
+    </modules>
+    <name>gml-schemas</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jaxb2-basics.version>0.11.0</jaxb2-basics.version>
+        <jaxb.version>2.2.11</jaxb.version>
+        <maven-jaxb2-plugin.version>0.13.1</maven-jaxb2-plugin.version>
+        <w3c-schemas.version>1.4.0</w3c-schemas.version>
+        <jsonix-schema-compiler.version>2.3.8</jsonix-schema-compiler.version>
+        <jsonix.version>2.4.0</jsonix.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.hisrc.w3c</groupId>
+                <artifactId>xlink-v_1_0</artifactId>
+                <version>${w3c-schemas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hisrc.w3c</groupId>
+                <artifactId>w3c-schemas</artifactId>
+                <version>${w3c-schemas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

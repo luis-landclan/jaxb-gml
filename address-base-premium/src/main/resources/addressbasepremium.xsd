@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:abpr="http://namespaces.geoplace.co.uk/addressbasepremium/2.1"
+  xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlxbt="http://www.opengis.net/gml/3.3/xbt"
+  elementFormDefault="qualified"
+  targetNamespace="http://namespaces.geoplace.co.uk/addressbasepremium/2.1" version="2.1">
+  <annotation>
+    <documentation>GML schema for AddressBase Premium product</documentation>
+  </annotation>
+  <import namespace="http://www.opengis.net/gml/3.2"
+    schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.3/xbt"
+    schemaLocation="http://schemas.opengis.net/gml/3.3/extdBaseTypes.xsd"/>
+  <import namespace="http://namespaces.geoplace.co.uk/addressbasepremium/2.1" schemaLocation="addressbasepremium.xsd"/>
+
+  <element name="AddressBaseSupplySet" substitutionGroup="gml:AbstractFeature"
+    type="abpr:AddressBaseSupplySetType"/>
+  <complexType name="AddressBaseSupplySetType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="queryTime" type="dateTime">
+            <annotation>
+              <documentation>Time the data was extracted from the database.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="queryChangeSinceDate" type="date">
+            <annotation>
+              <documentation>The date given as part of a change-only query</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="streetMember"
+            type="abpr:StreetPropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="basicLandPropertyUnitMember"
+            type="abpr:BasicLandPropertyUnitPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AddressBaseSupplySetPropertyType">
+    <sequence minOccurs="0">
+      <element ref="abpr:AddressBaseSupplySet"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <simpleType name="AddressbasePostalCodeType">
+    <union
+      memberTypes="abpr:AddressbasePostalCodeEnumerationType abpr:AddressbasePostalCodeOtherType"/>
+  </simpleType>
+  <simpleType name="AddressbasePostalCodeEnumerationType">
+    <restriction base="string">
+      <enumeration value="D">
+        <annotation>
+          <documentation>A record which is linked to PAF</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="N">
+        <annotation>
+          <documentation>Not a postal address</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="C">
+        <annotation>
+          <documentation>A record which is postal and has a parent record which is linked to
+            PAF</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="L">
+        <annotation>
+          <documentation>A record which is identified as postal based on Local Authority
+            information</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="AddressbasePostalCodeOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <element name="ApplicationCrossReference" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:ApplicationCrossReferenceType"/>
+  <complexType name="ApplicationCrossReferenceType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="xRefKey" type="string">
+            <annotation>
+              <documentation>Unique key for the application cross reference record and primary key
+                for this table. an x ref key follows the following convention
+                nnnnXsssssssss</documentation>
+            </annotation>
+          </element>
+          <element name="crossReference" type="string">
+            <annotation>
+              <documentation>Primary key of corresponding record in an external
+                dataset.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="version" type="integer">
+            <annotation>
+              <documentation>Certain data sources may reference objects with lifecycles. This field
+                enables users to reference specific versions of an object e.g. OS MasterMap
+                Topographic Layer TOID and Version.</documentation>
+            </annotation>
+          </element>
+          <element name="source" type="string">
+            <annotation>
+              <documentation>External dataset identity.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ApplicationCrossReferencePropertyType">
+    <sequence>
+      <element ref="abpr:ApplicationCrossReference"/>
+    </sequence>
+  </complexType>
+  <simpleType name="BLPUStateCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>under construction</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation>In use</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="3">
+        <annotation>
+          <documentation>Unoccupied / vacant / derelict</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="4">
+        <annotation>
+          <documentation>Demolished</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="6">
+        <annotation>
+          <documentation>Planning permission granted</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="NULL"/>
+    </restriction>
+  </simpleType>
+  <element name="BasicLandPropertyUnit" substitutionGroup="abpr:FeatureWithLifecycle"
+    type="abpr:BasicLandPropertyUnitType"/>
+  <complexType name="BasicLandPropertyUnitType">
+    <complexContent>
+      <extension base="abpr:FeatureWithLifecycleType">
+        <sequence>
+          <element name="uprn" type="integer">
+            <annotation>
+              <documentation>Unique Property Reference Number (UPRN) assigned by the LLPG Custodian
+                or Ordnance Survey.</documentation>
+            </annotation>
+          </element>
+          <element name="logicalStatus" type="abpr:LogicalStatusCodeType">
+            <annotation>
+              <documentation>Code identifying the logical status of the BLPU.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="blpuState" type="abpr:BLPUStateCodeType">
+            <annotation>
+              <documentation>A code identifying the current state of the BLPU.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="blpuStateDate" type="date">
+            <annotation>
+              <documentation>Date at which the BLPU achieved its current state in the real-world as
+                defined in the BLPU State field.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="parentUPRN" type="integer">
+            <annotation>
+              <documentation>UPRN of the parent record if a parent child relationship exists.
+                Source: Contributing Local Authority</documentation>
+            </annotation>
+          </element>
+          <element name="position" type="gml:PointPropertyType" nillable="true">
+            <annotation>
+              <documentation>The position of the address as a point derived from the BLPU. Points
+                will be given as 2D points using BNG as the coordinate reference
+                system.</documentation>
+            </annotation>
+          </element>
+          <element name="positionLatLong" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>A value defining the Latitude and Longitude location in accordance with
+                the ETRS89 coordinate reference system.</documentation>
+            </annotation>
+          </element>
+          <element name="rpc" type="abpr:RPCCodeType">
+            <annotation>
+              <documentation>Representative Point Code: this describes the accuracy of the
+                coordinate that has been allocated to the BLPU as indicated by the local authority
+                custodian.</documentation>
+            </annotation>
+          </element>
+          <element name="localCustodianCode" type="integer">
+            <annotation>
+              <documentation>Unique identifier of the Local Land and Property Gazetteer (LLPG)
+                Custodian responsible for the maintenance of this record.</documentation>
+            </annotation>
+          </element>
+          <element name="country" type="abpr:CountryCodeType">
+            <annotation>
+              <documentation>The country in which a record can be found.</documentation>
+            </annotation>
+          </element>
+          <element name="addressbasePostal" type="abpr:AddressbasePostalCodeType">
+            <annotation>
+              <documentation>Identifies addresses which are believed to be capable of receiving mail
+                as defined specifically for the AddressBase products, and details their relationship
+                with other AddressBase Postal records. N.B. this field identifies some addresses
+                which the AddressBase product believes to be capable of receiving mail which are not
+                contained within the Royal Mail PAF database, such as flats behind a front door
+                which has a single letter box.</documentation>
+            </annotation>
+          </element>
+          <element name="postcodeLocator" type="string">
+            <annotation>
+              <documentation>This field contains the Royal Mail Postcode Address File (PAF) postcode
+                where the local authority address has been matched to PAF, i.e. the POSTCODE field
+                found within the Delivery Point Address table. Where a match has not been made, the
+                postcode information is sourced from the local authority in collaboration with Royal
+                Mail. Where the local authority do not hold a current valid postcode Code-Point with
+                Polygons® is used to spatially derive the postcode based on the position of the
+                coordinates. This field must be used in conjunction with the RPC field to determine
+                the accuracy of its position.</documentation>
+            </annotation>
+          </element>
+          <element name="multiOccCount" type="integer">
+            <annotation>
+              <documentation>This is a count of all of the child UPRNs for this record where a
+                parent-child relationship exists.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="deliveryPointAddressMember"
+            type="abpr:DeliveryPointAddressPropertyType"/>
+          <element maxOccurs="unbounded" name="landPropertyIdentifierMember"
+            type="abpr:LandPropertyIdentifierPropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="organisationMember"
+            type="abpr:OrganisationPropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="successorMember"
+            type="abpr:SuccessorCrossReferencePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="applicationCrossReferenceMember"
+            type="abpr:ApplicationCrossReferencePropertyType"/>
+          <element maxOccurs="unbounded" name="classificationMember"
+            type="abpr:ClassificationPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="BasicLandPropertyUnitPropertyType">
+    <sequence minOccurs="0">
+      <element ref="abpr:BasicLandPropertyUnit"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <simpleType name="ChangeTypeCodeType">
+    <restriction base="string">
+      <enumeration value="I">
+        <annotation>
+          <documentation>Insert</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="U">
+        <annotation>
+          <documentation>update</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="D">
+        <annotation>
+          <documentation>Delete</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="Classification" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:ClassificationType"/>
+  <complexType name="ClassificationType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="classKey" type="string">
+            <annotation>
+              <documentation>Unique key for the classification record and primary key for this
+                table.</documentation>
+            </annotation>
+          </element>
+          <element name="classificationCode" type="string">
+            <annotation>
+              <documentation>A code that describes the classification of the record.</documentation>
+            </annotation>
+          </element>
+          <element name="classScheme" type="string">
+            <annotation>
+              <documentation>The name of the classification scheme used for this
+                record.</documentation>
+            </annotation>
+          </element>
+          <element name="schemeVersion" type="string">
+            <annotation>
+              <documentation>The classification scheme number.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ClassificationPropertyType">
+    <sequence>
+      <element ref="abpr:Classification"/>
+    </sequence>
+  </complexType>
+  <simpleType name="CountryCodeType">
+    <union memberTypes="abpr:CountryCodeEnumerationType abpr:CountryCodeOtherType"/>
+  </simpleType>
+  <simpleType name="CountryCodeEnumerationType">
+    <restriction base="string">
+      <enumeration value="E">
+        <annotation>
+          <documentation>This record is within England</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="W">
+        <annotation>
+          <documentation>This record is within Wales</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="S">
+        <annotation>
+          <documentation>This record is within Scotland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="N">
+        <annotation>
+          <documentation>This record is within Northern Ireland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="L">
+        <annotation>
+          <documentation>This record is within the Channel Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="M">
+        <annotation>
+          <documentation>This record is within the Isle of Man</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="J">
+        <annotation>
+          <documentation>This record is not assigned to a country</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="CountryCodeOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <element name="DeliveryPointAddress" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:DeliveryPointAddressType"/>
+  <complexType name="DeliveryPointAddressType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="udprn" type="integer">
+            <annotation>
+              <documentation>Royal Mail’s Unique Delivery Point Reference Number (UDPRN) and the
+                Primary key for this table.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="organisationName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The organisation name is the business name given to a delivery point
+                within a building or small group of buildings. For example: TOURIST INFORMATION
+                CENTRE This field could also include entries for churches, public houses and
+                libraries.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="departmentName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>For some organisations, department name is indicated because mail is
+                received by subdivisions of the main organisation at distinct delivery points. For
+                example: Organisation Name: ABC COMMUNICATIONS RM Department Name: MARKETING
+                DEPARTMENT</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="subBuildingName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The sub-building name and/or number are identifiers for subdivisions of
+                properties. For example: Sub-building Name: FLAT 3 Building Name: POPLAR COURT
+                Thoroughfare: LONDON ROAD &lt;i&gt;NOTE: If the above address is styled 3 POPLAR
+                COURT, all the text will be shown in the Building Name attribute and the
+                Sub-building Name will be empty. The building number will be shown in this field
+                when it contains a range, decimal or non-numeric character (see Building Number).
+                &lt;/i&gt;</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="buildingName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The building name is a description applied to a single building or a
+                small group of buildings, such as Highfield House. This also includes those building
+                numbers that contain non-numeric characters, such as 44A. Some descriptive names,
+                when included with the rest of the address, are sufficient to identify the property
+                uniquely and unambiguously, for example, MAGISTRATES COURT. Sometimes the building
+                name will be a blend of distinctive and descriptive naming, for example, RAILWAY
+                TAVERN (PUBLIC HOUSE) or THE COURT ROYAL (HOTEL).</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="buildingNumber" type="integer">
+            <annotation>
+              <documentation>The building number is a number given to a single building or a small
+                group of buildings, thus identifying it from its neighbours, for example, 44.
+                Building numbers that contain a range, decimals or non-numeric characters do not
+                appear in this field but will be found in the buildingName or the sub-BuildingName
+                fields.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="dependentThoroughfare" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>In certain places, for example, town centres, there are named
+                thoroughfares within other named thoroughfares, for example, parades of shops on a
+                high street where different parades have their own identity. For example, KINGS
+                PARADE, HIGH STREET and QUEENS PARADE, HIGH STREET.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="thoroughfare" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>A thoroughfare in AddressBase is fundamentally a road, track or named
+                access route on which there are Royal Mail delivery points, for example, HIGH
+                STREET.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="doubleDependentLocality" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>This is used to distinguish between similar thoroughfares or the same
+                thoroughfare within a dependent locality. For example, Millbrook Industrial Estate
+                and Cranford Estate in this situation: BRUNEL WAY, MILLBROOK INDUSTRIAL ESTATE,
+                MILLBROOK, SOUTHAMPTON and BRUNEL WAY, CRANFORD ESTATE, MILLBROOK,
+                SOUTHAMPTON.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="dependentLocality" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Dependent locality areas define an area within a post town. These are
+                only necessary for postal purposes and are used to aid differentiation where there
+                are thoroughfares of the same name in the same locality. For example, HIGH STREET in
+                SHIRLEY and SWAYTHLING in this situation: HIGH STREET, SHIRLEY, SOUTHAMPTON and HIGH
+                STREET, SWAYTHLING, SOUTHAMPTON.</documentation>
+            </annotation>
+          </element>
+          <element name="postTown" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The town or city in which the Royal Mail sorting office is located
+                which services this record. There may be more than one, possibly several, sorting
+                offices in a town or city.</documentation>
+            </annotation>
+          </element>
+          <element name="postcode" type="string">
+            <annotation>
+              <documentation>A postcode is an abbreviated form of address made up of combinations of
+                between five and seven alphanumeric characters. These are used by Royal Mail to help
+                with the automated sorting of mail. A postcode may cover between 1 and 100
+                addresses. There are two main components of a postcode, for example, NW6 4DP:
+                The outward code (or ‘outcode’). The first two–four characters
+                of the postcode constituting the postcode area and the postcode district, for
+                example, NW6. It is the part of the postcode that enables mail to be sent from the
+                accepting office to the correct area for delivery. The inward code (or ‘incode’). 
+                The last three characters of the postcode constituting the postcode sector and the
+                postcode unit, example, 4DP. It is used to sort mail at the local delivery 
+                office.</documentation>
+            </annotation>
+          </element>
+          <element name="postcodeType" type="string">
+            <annotation>
+              <documentation>Describes the address as a small or large user as defined by Royal
+                Mail.</documentation>
+            </annotation>
+          </element>
+          <element name="deliveryPointSuffix" type="string">
+            <annotation>
+              <documentation>A two character code uniquely identifying an individual delivery point
+                within a postcode.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="welshDependentThoroughfare" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The Welsh translation of DEPENDENT_THOROUGHFARE.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="welshThoroughfare" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The Welsh translation of THOROUGHFARE.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="welshDoubleDependentLocality"
+            type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The Welsh translation of Double Dependent Locality.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="welshDependentLocality" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The Welsh translation of DEPENDENT_LOCALITY.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="welshPostTown" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The Welsh translation of post town value.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="poBoxNumber" type="string">
+            <annotation>
+              <documentation>Post Office Box (PO Box®) number.</documentation>
+            </annotation>
+          </element>
+          <element name="processDate" type="date">
+            <annotation>
+              <documentation>The date on which the PAF record was processed into the
+                database.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="DeliveryPointAddressPropertyType">
+    <sequence>
+      <element ref="abpr:DeliveryPointAddress"/>
+    </sequence>
+  </complexType>
+  <element abstract="true" name="EntityWithLifecycle" substitutionGroup="gml:AbstractObject"
+    type="abpr:EntityWithLifecycleType"/>
+  <complexType abstract="true" name="EntityWithLifecycleType">
+    <sequence>
+      <element name="startDate" type="date">
+        <annotation>
+          <documentation>Date on which the record was first loaded into the
+            database.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="endDate" type="date">
+        <annotation>
+          <documentation>The date on which the record ceased to exist.</documentation>
+        </annotation>
+      </element>
+      <element name="lastUpdateDate" type="date">
+        <annotation>
+          <documentation>The date on which any attribute on this record was last
+            changed.</documentation>
+        </annotation>
+      </element>
+      <element name="entryDate" type="date">
+        <annotation>
+          <documentation>The date on which the record was entered into the Local Authority
+            database.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="EntityWithLifecyclePropertyType">
+    <sequence>
+      <element ref="abpr:EntityWithLifecycle"/>
+    </sequence>
+  </complexType>
+  <element abstract="true" name="FeatureWithLifecycle" substitutionGroup="gml:AbstractFeature"
+    type="abpr:FeatureWithLifecycleType"/>
+  <complexType abstract="true" name="FeatureWithLifecycleType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="changeType" type="abpr:ChangeTypeCodeType">
+            <annotation>
+              <documentation>Type of record change.</documentation>
+            </annotation>
+          </element>
+          <element name="startDate" type="date">
+            <annotation>
+              <documentation>Date on which the record was first loaded into the
+                database.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="endDate" type="date">
+            <annotation>
+              <documentation>The date on which the record ceased to exist.</documentation>
+            </annotation>
+          </element>
+          <element name="lastUpdateDate" type="date">
+            <annotation>
+              <documentation>The date on which any attribute on this record was last
+                changed.</documentation>
+            </annotation>
+          </element>
+          <element name="entryDate" type="date">
+            <annotation>
+              <documentation>The date on which the record was entered into the Local Authority
+                database.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FeatureWithLifecyclePropertyType">
+    <sequence minOccurs="0">
+      <element ref="abpr:FeatureWithLifecycle"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <simpleType name="FileTypeCodeType">
+    <restriction base="string">
+      <enumeration value="F">
+        <annotation>
+          <documentation>Signifies the supply is a full supply</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="C">
+        <annotation>
+          <documentation>Signifies the supply is a COU file.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="LandPropertyIdentifier" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:LandPropertyIdentifierType"/>
+  <complexType name="LandPropertyIdentifierType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="lpiKey" type="string">
+            <annotation>
+              <documentation>Unique key for the LPI and primary key for this table.</documentation>
+            </annotation>
+          </element>
+          <element name="logicalStatus" type="abpr:LogicalStatusCodeType">
+            <annotation>
+              <documentation>Logical status of this record.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="saoStartNumber" type="integer">
+            <annotation>
+              <documentation>The number of the secondary addressable object (SAO) or the start of
+                the number range.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="saoStartSuffix" type="string">
+            <annotation>
+              <documentation>The suffix to the SAO_START_NUMBER.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="saoEndNumber" type="integer">
+            <annotation>
+              <documentation>The end of the number range for the SAO, where the SAO_START_NUMBER
+                contains the first number in the range.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="saoEndSuffix" type="string">
+            <annotation>
+              <documentation>The suffix to the SAO_END_NUMBER.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="saoText" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Contains the building name or description for the SAO.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="paoStartNumber" type="integer">
+            <annotation>
+              <documentation>The number of the primary addressable object (PAO) or the start of the
+                number range.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="paoStartSuffix" type="string">
+            <annotation>
+              <documentation>The suffix to the PAO_START_NUMBER.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="paoEndNumber" type="integer">
+            <annotation>
+              <documentation>The end of the number range for the PAO where the PAO_START_NUMBER
+                contains the first number in the range.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="paoEndSuffix" type="string">
+            <annotation>
+              <documentation>The suffix to the PAO_END_NUMBER.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="paoText" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Contains the building name or description for the PAO.</documentation>
+            </annotation>
+          </element>
+          <element name="usrn" type="integer">
+            <annotation>
+              <documentation>Unique Street Reference Number (USRN) - foreign key linking the Street
+                record to the LPI record.</documentation>
+            </annotation>
+          </element>
+          <element name="usrnMatchIndicator" type="abpr:USRNMatchIndicatorCodeType">
+            <annotation>
+              <documentation>This field indicates how the item was matched to a Street. 1 is matched
+                manually to the most accessible USRN and 2 is matched spatially to the nearest USRN,
+                which may not be the nearest accessible street.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="areaName" type="string">
+            <annotation>
+              <documentation>Third level of geographic area name, for example, to record island
+                names or property groups such as crofts.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="level" type="string">
+            <annotation>
+              <documentation>Memorandum of the vertical position of the address as provided by the
+                local authority custodian.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="officialFlag" type="abpr:OfficialFlagCodeType">
+            <annotation>
+              <documentation>Status of the Address.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="LandPropertyIdentifierPropertyType">
+    <sequence>
+      <element ref="abpr:LandPropertyIdentifier"/>
+    </sequence>
+  </complexType>
+  <simpleType name="LogicalStatusCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>Approved</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="3">
+        <annotation>
+          <documentation>Alternative</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="6">
+        <annotation>
+          <documentation>Provisional</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="8">
+        <annotation>
+          <documentation>Historical</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="OfficialFlagCodeType">
+    <restriction base="string">
+      <enumeration value="N">
+        <annotation>
+          <documentation>Unofficial Address</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="Y">
+        <annotation>
+          <documentation>Official Address</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="Organisation" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:OrganisationType"/>
+  <complexType name="OrganisationType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="orgKey" type="string">
+            <annotation>
+              <documentation>Unique key for the organisation record and primary key for this
+                table.</documentation>
+            </annotation>
+          </element>
+          <element name="organisation" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Name of the organisation currently occupying the address record as
+                provided by the local authority custodian.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="legalName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Registered legal name of the organisation.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="OrganisationPropertyType">
+    <sequence>
+      <element ref="abpr:Organisation"/>
+    </sequence>
+  </complexType>
+  <simpleType name="PostcodeTypeCodeType">
+    <restriction base="string">
+      <enumeration value="S">
+        <annotation>
+          <documentation>A small user, e.g. a residential property</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="L">
+        <annotation>
+          <documentation>A large user, e.g. a large commercial company</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="RPCCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>Central Internal Position.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation>General Internal Position.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="3">
+        <annotation>
+          <documentation>Transitional Position.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="4">
+        <annotation>
+          <documentation>Street Location.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="5">
+        <annotation>
+          <documentation>Postcode Unit Position.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="9">
+        <annotation>
+          <documentation>Low accuracy - marked for priority review.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="Street" substitutionGroup="abpr:FeatureWithLifecycle" type="abpr:StreetType"/>
+  <complexType name="StreetType">
+    <complexContent>
+      <extension base="abpr:FeatureWithLifecycleType">
+        <sequence>
+          <element name="usrn" type="integer">
+            <annotation>
+              <documentation>Unique Street Reference Number (USRN) - the unique key for the record
+                and primary key for the Street table.</documentation>
+            </annotation>
+          </element>
+          <element name="recordType" type="abpr:StreetRecordTypeCodeType">
+            <annotation>
+              <documentation>The record type of the street, for example a ‘Numbered
+                Street’.</documentation>
+            </annotation>
+          </element>
+          <element name="swaOrgRefNaming" type="integer">
+            <annotation>
+              <documentation>The code which identifies the Street Naming and Numbering Authority or
+                the Local Highway Authority.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="state" type="abpr:StreetStateCodeType">
+            <annotation>
+              <documentation>A code identifying the current state of the Street, ‘Open’ for
+                example.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="stateDate" type="date">
+            <annotation>
+              <documentation>Date at which the street achieved its current state in the world as
+                referenced to the ‘State’ column.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="streetSurface" type="abpr:StreetSurfaceCodeType">
+            <annotation>
+              <documentation>A code to indicate the surface finish of the street.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="streetClassification"
+            type="abpr:StreetClassificationCodeType">
+            <annotation>
+              <documentation>A code for the primary street classification, for example denoting it
+                to be ‘open to all vehicles’.</documentation>
+            </annotation>
+          </element>
+          <element name="version" type="integer">
+            <annotation>
+              <documentation>Version number of the street record.</documentation>
+            </annotation>
+          </element>
+          <element name="streetStart" type="gml:PointPropertyType" nillable="true">
+            <annotation>
+              <documentation>A value in metres defining the x and y location in accordance to the
+                British National Grid for the start point of the street.</documentation>
+            </annotation>
+          </element>
+          <element name="streetStartLatLong" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>A value defining the Latitude and Longitude start point of the street
+                in accordance with the ETRS89 coordinate reference system.</documentation>
+            </annotation>
+          </element>
+          <element name="streetEnd" type="gml:PointPropertyType" nillable="true">
+            <annotation>
+              <documentation>A value in metres defining the x and y location in accordance to the
+                British National Grid for the end point of the street.</documentation>
+            </annotation>
+          </element>
+          <element name="streetEndLatLong" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>A value defining the Latitude and Longitude end point of the street in
+                accordance with the ETRS89 coordinate reference system.</documentation>
+            </annotation>
+          </element>
+          <element name="streetTolerance" type="integer">
+            <annotation>
+              <documentation>The tolerance of the start and end coordinates in
+                metres.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="streetDescriptiveIdentifierMember"
+            type="abpr:StreetDescriptiveIdentifierPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StreetPropertyType">
+    <sequence minOccurs="0">
+      <element ref="abpr:Street"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <simpleType name="StreetClassificationCodeType">
+    <restriction base="string">
+      <enumeration value="4">
+        <annotation>
+          <documentation>Pedestrian way or footpath</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="6">
+        <annotation>
+          <documentation>Cycletrack or cycleway</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="8">
+        <annotation>
+          <documentation>All vehicles</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="9">
+        <annotation>
+          <documentation>Restricted byway</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="10">
+        <annotation>
+          <documentation>Bridleway</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="StreetDescriptiveIdentifier" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:StreetDescriptiveIdentifierType"/>
+  <complexType name="StreetDescriptiveIdentifierType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="streetDescription" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Name, description or Street number for this record.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="locality" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>A locality defines an area or geographical identifier within a town,
+                village or hamlet. Locality represents the lower level geographical area. The
+                locality field should be used in conjunction with the town name and street
+                description fields to uniquely identify geographic area where there may be more than
+                one within an administrative area.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="townName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Town Name.</documentation>
+            </annotation>
+          </element>
+          <element name="administrativeArea" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>Local Highway Authority name for the area this record exists
+                within.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StreetDescriptiveIdentifierPropertyType">
+    <sequence>
+      <element ref="abpr:StreetDescriptiveIdentifier"/>
+    </sequence>
+  </complexType>
+  <simpleType name="StreetRecordTypeCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>Official designated Street Name</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation>Street Description</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="3">
+        <annotation>
+          <documentation>Numbered Street</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="4">
+        <annotation>
+          <documentation>Unofficial Street Description</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="9">
+        <annotation>
+          <documentation>Description used for LLPG Access</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="StreetStateCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>Under construction</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation>Open</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="4">
+        <annotation>
+          <documentation>Permanently closed (STREET_END_DATE must be entered)</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="StreetSurfaceCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>Metalled</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation>UnMetalled</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="3">
+        <annotation>
+          <documentation>Mixed</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="SuccessorCrossReference" substitutionGroup="abpr:EntityWithLifecycle"
+    type="abpr:SuccessorCrossReferenceType"/>
+  <complexType name="SuccessorCrossReferenceType">
+    <complexContent>
+      <extension base="abpr:EntityWithLifecycleType">
+        <sequence>
+          <element name="succKey" type="string">
+            <annotation>
+              <documentation>Key value to uniquely identify the successor cross reference record and
+                the primary key for this table.</documentation>
+            </annotation>
+          </element>
+          <element name="successor" type="integer">
+            <annotation>
+              <documentation>UPRN of successor BLPU.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="SuccessorCrossReferencePropertyType">
+    <sequence>
+      <element ref="abpr:SuccessorCrossReference"/>
+    </sequence>
+  </complexType>
+  <simpleType name="USRNMatchIndicatorCodeType">
+    <restriction base="string">
+      <enumeration value="1">
+        <annotation>
+          <documentation>Matched manually to the nearest accessible Street.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation>Matched spatially to the nearest USRN. Not necessarily the access
+            street.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+</schema>

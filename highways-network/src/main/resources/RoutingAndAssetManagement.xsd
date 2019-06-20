@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:gml="http://www.opengis.net/gml/3.2"  
+  xmlns:highway="http://namespaces.os.uk/mastermap/highwayNetwork/2.0"
+  xmlns:net="http://inspire.ec.europa.eu/schemas/net/4.0"
+  xmlns:ram="http://namespaces.os.uk/mastermap/routingAndAssetManagement/2.1"
+  xmlns:tn="http://inspire.ec.europa.eu/schemas/tn/4.0"
+  xmlns:os="http://namespaces.os.uk/product/1.0"
+  elementFormDefault="qualified" targetNamespace="http://namespaces.os.uk/mastermap/routingAndAssetManagement/2.1" version="2.1">
+  <import namespace="http://inspire.ec.europa.eu/schemas/net/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/net/4.0/Network.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/tn/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn/4.0/CommonTransportElements.xsd"/>
+  <import namespace="http://namespaces.os.uk/mastermap/highwayNetwork/2.0" schemaLocation="highwaysnetwork/2.0/LinearHighwayNetwork.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+<!--  <import namespace="http://namespaces.os.uk/product/1.0" schemaLocation="OSProduct.xsd"/>-->
+  <import namespace="http://namespaces.os.uk/mastermap/routingAndAssetManagement/2.1" schemaLocation="RoutingAndAssetManagement.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="NodeReference" substitutionGroup="net:NetworkReference" type="ram:NodeReferenceType"/>
+  <complexType name="NodeReferenceType">
+    <complexContent>
+      <extension base="net:NetworkReferenceType">
+        <sequence>
+          <element name="location" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>The co-ordinates for the RoadNode the feature is referencing.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" name="linkReference" type="net:LinkPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="NodeReferencePropertyType">
+    <sequence>
+      <element ref="ram:NodeReference"/>
+    </sequence>
+  </complexType>
+  <element name="NetworkReferenceLocation" substitutionGroup="net:NetworkReference" type="ram:NetworkReferenceLocationType"/>
+  <complexType name="NetworkReferenceLocationType">
+    <complexContent>
+      <extension base="net:NetworkReferenceType">
+        <sequence>
+          <element minOccurs="0" name="locationDescription" type="string">
+            <annotation>
+              <documentation>Textual description of the location extent of the referenced property when the feature partially references the network.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="locationStart" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>The geometry of where the feature starts.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="locationEnd" type="gml:PointPropertyType">
+            <annotation>
+              <documentation>The geometry of where the feature ends.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="locationLine" type="gml:MultiCurvePropertyType">
+            <annotation>
+              <documentation>A linear representation of the feature.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="locationArea" type="gml:MultiSurfacePropertyType">
+            <annotation>
+              <documentation>An area representation of the feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="NetworkReferenceLocationPropertyType">
+    <sequence>
+      <element ref="ram:NetworkReferenceLocation"/>
+    </sequence>
+  </complexType>
+  <element name="Reinstatement" substitutionGroup="tn:TransportProperty" type="ram:ReinstatementType">
+    <annotation>
+      <documentation>The standard to which the highway must be restored to following street works.</documentation>
+    </annotation>
+  </element>
+  <complexType name="ReinstatementType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="reinstatementType" type="gml:CodeType">
+            <annotation>
+              <documentation>Reinstatement as defined in the Specification for Reinstatement of Opening in Highways codes of practice in England and Wales and the Specification for the Reinstatement of Openings in Roads in Scotland.</documentation>
+            </annotation>
+          </element>
+          <element default="false" name="partialReference" type="boolean">
+            <annotation>
+              <documentation>Flag to indicate that the maintenance feature partially references a Street.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ReinstatementPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:Reinstatement"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="Hazard" substitutionGroup="tn:TransportProperty" type="ram:HazardType">
+    <annotation>
+      <documentation>A location where a specified risk to vehicular travel may exist and caution should be taken.</documentation>
+    </annotation>
+  </element>
+  <complexType name="HazardType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="hazard" type="gml:CodeType">
+            <annotation>
+              <documentation>Classification of the type of risk that applies that may impact choice of route or where caution should be observed.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="description" type="string">
+            <annotation>
+              <documentation>Additional information describing the hazard.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="HazardPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:Hazard"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <simpleType name="MaintenanceValueType">
+    <annotation>
+      <documentation>Classification of the maintenance responsibility of a highway. This is typically known as "adoption".</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="Maintainable At Public Expense">
+        <annotation>
+          <documentation>The highway is maintained at public expense by a responsible highways authority.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="Prospectively Maintainable At Public Expense">
+        <annotation>
+          <documentation>An application has been submitted to maintain the highway at public expense.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="Not Maintained At Public Expense">
+        <annotation>
+          <documentation>The highway is not maintained at public expense.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="Maintenance Responsibility Is To Another Highway Authority">
+        <annotation>
+          <documentation>Another National Highway Authority or another Regional Highway Authority is responsible for maintaining this Street.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="Street Outside Scope Of EToN">
+        <annotation>
+          <documentation>A Street which exists for NLPG purposes only and is not capable of being noticed.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <element name="TimeRangeType" substitutionGroup="gml:AbstractObject" type="ram:TimeRangeTypeType"/>
+  <complexType name="TimeRangeTypeType">
+    <sequence>
+      <element name="startTime" type="time"/>
+      <element name="endTime" type="time"/>
+    </sequence>
+  </complexType>
+  <complexType name="TimeRangeTypePropertyType">
+    <sequence>
+      <element ref="ram:TimeRangeType"/>
+    </sequence>
+  </complexType>
+  <element name="SpecialDesignation" substitutionGroup="tn:TransportProperty" type="ram:SpecialDesignationType">
+    <annotation>
+      <documentation>A description applied to a highway to protect it when works are undertaken.</documentation>
+    </annotation>
+  </element>
+  <complexType name="SpecialDesignationType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="designation" type="gml:CodeType">
+            <annotation>
+              <documentation>Type of Special Designation.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="description" type="string">
+            <annotation>
+              <documentation>Additional information describing the special designation.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="timeInterval" type="ram:TemporalPropertyTypePropertyType">
+            <annotation>
+              <documentation>Time period to which the restriction applies.
+
+Example:
+Mon-Fri 08:00-9:30
+At any time</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="contactAuthority" type="highway:ResponsibleAuthorityPropertyType">
+            <annotation>
+              <documentation>Highway authority to be contacted for further consultation about the special designation.</documentation>
+            </annotation>
+          </element>
+          <element default="false" name="partialReference" type="boolean">
+            <annotation>
+              <documentation>Flag to indicate that the maintenance feature partially references a Street.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="SpecialDesignationPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:SpecialDesignation"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="RestrictionForVehicles" substitutionGroup="tn:RestrictionForVehicles" type="ram:RestrictionForVehiclesType">
+    <annotation>
+      <documentation>Height, Weight, Width and Length restrictions (HWWL).
+
+NOTE: HWWL restrictions are typically defined in both metric (metres) and imperial (feet) units.</documentation>
+    </annotation>
+  </element>
+  <complexType name="RestrictionForVehiclesType">
+    <complexContent>
+      <extension base="tn:RestrictionForVehiclesType">
+        <sequence>
+          <element name="sourceOfMeasure" type="string">
+            <annotation>
+              <documentation>Indicates if the measure value is from a sign or has been converted from a different unit of measure.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="measure2" type="gml:MeasureType">
+            <annotation>
+              <documentation>The measure for the restriction in imperial units and will be in inches, if present on the sign.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="inclusion" type="ram:VehicleQualifierPropertyType">
+            <annotation>
+              <documentation>Vehicle types or uses that the restriction applies to.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="exemption" type="ram:VehicleQualifierPropertyType">
+            <annotation>
+              <documentation>Vehicle types or uses that are  exemptions to the restriction.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="structure" type="gml:CodeType">
+            <annotation>
+              <documentation>Description of the structure to which the restriction applies.
+For example: Bridge</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="2" name="trafficSign" type="string">
+            <annotation>
+              <documentation>The imperial measure, as defined on the sign, for the restriction. For example, 6'-6"</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="trafficRegulationOrder" type="ram:TrafficRegulationOrderTypePropertyType">
+            <annotation>
+              <documentation>Reference to the Traffic Regulation Order that formally created the restriction.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="RestrictionForVehiclesPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:RestrictionForVehicles"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="DateRangeType" substitutionGroup="gml:AbstractObject" type="ram:DateRangeTypeType"/>
+  <complexType name="DateRangeTypeType">
+    <sequence>
+      <element minOccurs="0" name="startDate" type="date"/>
+      <element minOccurs="0" name="endDate" type="date"/>
+      <element minOccurs="0" name="startMonthDay" type="gMonthDay"/>
+      <element minOccurs="0" name="endMonthDay" type="gMonthDay"/>
+    </sequence>
+  </complexType>
+  <complexType name="DateRangeTypePropertyType">
+    <sequence>
+      <element ref="ram:DateRangeType"/>
+    </sequence>
+  </complexType>
+  <element name="DayPropertyType" substitutionGroup="gml:AbstractObject" type="ram:DayPropertyTypeType"/>
+  <complexType name="DayPropertyTypeType">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="namedDay" type="gml:CodeType"/>
+      <element maxOccurs="unbounded" minOccurs="0" name="namedPeriod" type="gml:CodeType"/>
+      <element maxOccurs="unbounded" minOccurs="0" name="timePeriod" type="ram:TimePropertyTypePropertyType"/>
+    </sequence>
+  </complexType>
+  <complexType name="DayPropertyTypePropertyType">
+    <sequence>
+      <element ref="ram:DayPropertyType"/>
+    </sequence>
+  </complexType>
+  <element name="TrafficRegulationOrderType" substitutionGroup="gml:AbstractObject" type="ram:TrafficRegulationOrderTypeType">
+    <annotation>
+      <documentation>Traffic management controls which highway authorities apply to their roads.</documentation>
+    </annotation>
+  </element>
+  <complexType name="TrafficRegulationOrderTypeType">
+    <sequence>
+      <element name="trafficRegulationOrder" type="string">
+        <annotation>
+          <documentation>Reference to the Traffic Regulation Order that formally created the restriction.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="troDescription" type="string">
+        <annotation>
+          <documentation>Description of restriction defined in the Traffic Regulation Order.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="TrafficRegulationOrderTypePropertyType">
+    <sequence>
+      <element ref="ram:TrafficRegulationOrderType"/>
+    </sequence>
+  </complexType>
+  <element name="VehicleQualifier" substitutionGroup="gml:AbstractObject" type="ram:VehicleQualifierType">
+    <annotation>
+      <documentation>Types and uses of vehicles that a restriction can apply to or restrict.</documentation>
+    </annotation>
+  </element>
+  <complexType name="VehicleQualifierType">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="vehicle" type="gml:CodeType">
+        <annotation>
+          <documentation>List of vehicles included or exempt from the restriction.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="use" type="gml:CodeType">
+        <annotation>
+          <documentation>List of uses included or exempt from the restriction.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="load" type="gml:CodeType">
+        <annotation>
+          <documentation>List of loads included or exempt from the restriction.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="VehicleQualifierPropertyType">
+    <sequence>
+      <element ref="ram:VehicleQualifier"/>
+    </sequence>
+  </complexType>
+  <element name="Maintenance" substitutionGroup="tn:TransportProperty" type="ram:MaintenanceType">
+    <annotation>
+      <documentation>Indication of whether the highway is maintained by a Highways Authority, Local Highways Authority, Road Authority or by another body.</documentation>
+    </annotation>
+  </element>
+  <complexType name="MaintenanceType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="maintenanceResponsibility" type="ram:MaintenanceValueType">
+            <annotation>
+              <documentation>Indication of whether the highway is maintainable at public expense.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="maintenanceAuthority" type="highway:ResponsibleAuthorityPropertyType">
+            <annotation>
+              <documentation>Authority responsible for maintenance of the highway.</documentation>
+            </annotation>
+          </element>
+          <element default="false" name="partialReference" type="boolean">
+            <annotation>
+              <documentation>Flag to indicate that the maintenance feature partially references a Street.</documentation>
+            </annotation>
+          </element>
+          <element name="highwayAuthority" type="highway:ResponsibleAuthorityPropertyType">
+            <annotation>
+              <documentation>The authority which the highway resides in.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="MaintenancePropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:Maintenance"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="TemporalPropertyType" substitutionGroup="gml:AbstractObject" type="ram:TemporalPropertyTypeType">
+    <annotation>
+      <documentation>The time period which a restriction is in place.</documentation>
+    </annotation>
+  </element>
+  <complexType name="TemporalPropertyTypeType">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="namedDate" type="gml:CodeType">
+        <annotation>
+          <documentation>The named month or period this time interval applies.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="dateRange" type="ram:DateRangeTypePropertyType"/>
+      <element maxOccurs="unbounded" minOccurs="0" name="dayPeriod" type="ram:DayPropertyTypePropertyType"/>
+    </sequence>
+  </complexType>
+  <complexType name="TemporalPropertyTypePropertyType">
+    <sequence>
+      <element ref="ram:TemporalPropertyType"/>
+    </sequence>
+  </complexType>
+  <element name="TimePropertyType" substitutionGroup="gml:AbstractObject" type="ram:TimePropertyTypeType"/>
+  <complexType name="TimePropertyTypeType">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="namedTime" type="gml:CodeType"/>
+      <element maxOccurs="unbounded" minOccurs="0" name="timeRange" type="ram:TimeRangeTypePropertyType"/>
+    </sequence>
+  </complexType>
+  <complexType name="TimePropertyTypePropertyType">
+    <sequence>
+      <element ref="ram:TimePropertyType"/>
+    </sequence>
+  </complexType>
+  <element name="AccessRestriction" substitutionGroup="tn:AccessRestriction" type="ram:AccessRestrictionType">
+    <annotation>
+      <documentation>A constraint on vehicular access to a highway.</documentation>
+    </annotation>
+  </element>
+  <complexType name="AccessRestrictionType">
+    <complexContent>
+      <extension base="tn:AccessRestrictionType">
+        <sequence>
+          <element minOccurs="0" name="inclusion" type="ram:VehicleQualifierPropertyType">
+            <annotation>
+              <documentation>Types of vehicle or use that the restriction applies to.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="exemption" type="ram:VehicleQualifierPropertyType">
+            <annotation>
+              <documentation>Types of vehicle or use that are exempt from the restriction.
+
+Example:
+&lt;ul&gt;
+	&lt;li&gt;No Entry (except Buses)&lt;/li&gt;
+	&lt;li&gt;Prohibited Access (except Emergency Vehicles)&lt;/li&gt;
+&lt;/ul&gt;</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="timeInterval" type="ram:TemporalPropertyTypePropertyType">
+            <annotation>
+              <documentation>Time period to which the restriction applies.
+
+Example:
+Mon-Fri 08:00-9:30
+At any time</documentation>
+            </annotation>
+          </element>
+          <element name="trafficSign" type="string">
+            <annotation>
+              <documentation>A description of the traffic sign indicating the restriction e.g. Access Limited to Buses .</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AccessRestrictionPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:AccessRestriction"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="TurnRestriction" substitutionGroup="tn:TransportProperty" type="ram:TurnRestrictionType">
+    <annotation>
+      <documentation>A constraint on vehicular manoeuvre.</documentation>
+    </annotation>
+  </element>
+  <complexType name="TurnRestrictionType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="restriction" type="gml:CodeType">
+            <annotation>
+              <documentation>Type of turn constraint.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="inclusion" type="ram:VehicleQualifierPropertyType">
+            <annotation>
+              <documentation>Types of vehicle or use that the restriction applies to.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="exemption" type="ram:VehicleQualifierPropertyType">
+            <annotation>
+              <documentation>Types of vehicle or use that are exempt from the turn restriction.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="timeInterval" type="ram:TemporalPropertyTypePropertyType">
+            <annotation>
+              <documentation>Time period to which the restriction applies.
+
+Example:
+Mon-Fri 08:00-9:30
+At any time</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="TurnRestrictionPropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:TurnRestriction"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="Structure" substitutionGroup="tn:TransportProperty" type="ram:StructureType">
+    <annotation>
+      <documentation>A built feature with a relation to the highway network that may affect a user.</documentation>
+    </annotation>
+  </element>
+  <complexType name="StructureType">
+    <complexContent>
+      <extension base="tn:TransportPropertyType">
+        <sequence>
+          <element name="structure" type="gml:CodeType">
+            <annotation>
+              <documentation>Type of built feature.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="description" type="string">
+            <annotation>
+              <documentation>Additional information describing the structure.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="StructurePropertyType">
+    <sequence minOccurs="0">
+      <element ref="ram:Structure"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+</schema>

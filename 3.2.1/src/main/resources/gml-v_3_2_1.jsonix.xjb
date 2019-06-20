@@ -3,7 +3,7 @@
 	xmlns:jsonix="http://jsonix.highsource.org/customizations"
 	jaxb:extensionBindingPrefixes="jsonix">
 
-	<jaxb:bindings schemaLocation="gml/3.2.1/gml.xsd"
+	<jaxb:bindings schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd" 
 		node="/xs:schema">
 		<jsonix:packageMapping packageName="net.opengis.gml.v_3_2_1" spaceName="GML_3_2_1"/>
 	</jaxb:bindings>

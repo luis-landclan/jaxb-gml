@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+				xmlns:gml="http://www.opengis.net/gml/3.2" 
+				xmlns:gmlxbt="http://www.opengis.net/gml/3.3/xbt" 
+				xmlns:net="http://inspire.ec.europa.eu/schemas/net/4.0" 
+				xmlns:network="http://namespaces.os.uk/mastermap/generalNetwork/2.0" 
+				xmlns:tn="http://inspire.ec.europa.eu/schemas/tn/4.0"
+				 xmlns:tn-ro="http://inspire.ec.europa.eu/schemas/tn-ro/4.0" 
+				 targetNamespace="http://namespaces.os.uk/mastermap/generalNetwork/2.0" 
+				 elementFormDefault="qualified" version="2.0">
+	<import namespace="http://inspire.ec.europa.eu/schemas/net/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/net/4.0/Network.xsd"/>
+	<import namespace="http://inspire.ec.europa.eu/schemas/tn-ro/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn-ro/4.0/RoadTransportNetwork.xsd"/>
+	<import namespace="http://inspire.ec.europa.eu/schemas/tn/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn/4.0/CommonTransportElements.xsd"/>
+	<import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<import namespace="http://www.opengis.net/gml/3.3/xbt" schemaLocation="http://schemas.opengis.net/gml/3.3/extdBaseTypes.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="LinearReference" substitutionGroup="net:SimpleLinearReference" type="network:LinearReferenceType"/>
+  <complexType name="LinearReferenceType">
+    <complexContent>
+      <extension base="net:SimpleLinearReferenceType">
+        <sequence>
+          <element name="fromPositionGeometry" type="gml:PointPropertyType"/>
+          <element name="toPositionGeometry" type="gml:PointPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="LinearReferencePropertyType">
+    <sequence>
+      <element ref="network:LinearReference"/>
+    </sequence>
+  </complexType>
+  <element name="PointReference" substitutionGroup="net:SimplePointReference" type="network:PointReferenceType"/>
+  <complexType name="PointReferenceType">
+    <complexContent>
+      <extension base="net:SimplePointReferenceType">
+        <sequence>
+          <element name="atPositionGeometry" type="gml:PointPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="PointReferencePropertyType">
+    <sequence>
+      <element ref="network:PointReference"/>
+    </sequence>
+  </complexType>
+</schema>

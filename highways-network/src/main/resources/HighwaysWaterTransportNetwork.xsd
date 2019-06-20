@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:gml="http://www.opengis.net/gml/3.2" 
+  xmlns:gmlxbt="http://www.opengis.net/gml/3.3/xbt" 
+  xmlns:hwtn="http://namespaces.os.uk/mastermap/highwaysWaterTransportNetwork/1.0" 
+  xmlns:net="http://inspire.ec.europa.eu/schemas/net/4.0" 
+  xmlns:fs="http://namespaces.ordnancesurvey.co.uk/mastermap/sites/v1.0"
+  xmlns:tn-w="http://inspire.ec.europa.eu/schemas/tn-w/4.0"
+  xmlns:os="http://namespaces.os.uk/product/1.0"
+  elementFormDefault="qualified" targetNamespace="http://namespaces.os.uk/mastermap/highwaysWaterTransportNetwork/1.0" version="1.0">
+  <import namespace="http://inspire.ec.europa.eu/schemas/net/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/net/4.0/Network.xsd"/>
+  <import namespace="http://inspire.ec.europa.eu/schemas/tn-w/4.0" schemaLocation="http://inspire.ec.europa.eu/schemas/tn-w/4.0/WaterTransportNetwork.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.3/xbt" schemaLocation="http://schemas.opengis.net/gml/3.3/extdBaseTypes.xsd"/>
+  <import namespace="http://namespaces.ordnancesurvey.co.uk/mastermap/sites/v1.0" schemaLocation="https://www.ordnancesurvey.co.uk/xml/schema/sites/v1/OSMasterMapSites.xsd"/>
+  <import namespace="http://namespaces.os.uk/product/1.0" schemaLocation="https://www.ordnancesurvey.co.uk/xml/schema/product/1.0/OSProduct.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="FerryTerminal" substitutionGroup="net:NetworkConnection" type="hwtn:FerryTerminalType">
+    <annotation>
+      <documentation>A logical connection between a PathNode or RoadNode and the FerryNode. It represents the connection between the Road or Path network and the Ferry network.</documentation>
+    </annotation>
+  </element>
+  <complexType name="FerryTerminalType">
+    <complexContent>
+      <extension base="net:NetworkConnectionType">
+        <sequence>
+          <element maxOccurs="2" minOccurs="0" name="ferryTerminalName" type="gmlxbt:LanguageStringType">
+            <annotation>
+              <documentation>The name of the Ferry Terminal</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="ferryTerminalCode" type="string">
+            <annotation>
+              <documentation>The recognised code of the Ferry Terminal</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="refToFunctionalSite" type="fs:FunctionalSitePropertyType">
+            <annotation>
+              <documentation>Reference to the Site representation of the Ferry Terminal in OS MasterMap Sites Layer</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FerryTerminalPropertyType">
+    <sequence minOccurs="0">
+      <element ref="hwtn:FerryTerminal"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="FerryNode" substitutionGroup="tn-w:WaterwayNode" type="hwtn:FerryNodeType">
+    <annotation>
+      <documentation>A feature representing a the point at which a vehicular or pedestrian ferry route or section of ferry route starts or ends.</documentation>
+    </annotation>
+  </element>
+  <complexType name="FerryNodeType">
+    <complexContent>
+      <extension base="tn-w:WaterwayNodeType">
+        <sequence>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FerryNodePropertyType">
+    <sequence minOccurs="0">
+      <element ref="hwtn:FerryNode"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="FerryLink" substitutionGroup="tn-w:WaterwayLink" type="hwtn:FerryLinkType">
+    <annotation>
+      <documentation>A network link representing a route for a vehicular or pedestrian ferry route.</documentation>
+    </annotation>
+  </element>
+  <complexType name="FerryLinkType">
+    <complexContent>
+      <extension base="tn-w:WaterwayLinkType">
+        <sequence>
+          <element name="vehicularFerry" type="boolean">
+            <annotation>
+              <documentation>An indicator if this FerryLink represents a ferry that can be used by vehicles.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="routeOperator" type="string">
+            <annotation>
+              <documentation>The URL to the operator of this Ferry route.</documentation>
+            </annotation>
+          </element>
+          <element name="reasonForChange" type="gml:CodeType">
+            <annotation>
+              <documentation>The reason for a change made to a feature.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FerryLinkPropertyType">
+    <sequence minOccurs="0">
+      <element ref="hwtn:FerryLink"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+</schema>
